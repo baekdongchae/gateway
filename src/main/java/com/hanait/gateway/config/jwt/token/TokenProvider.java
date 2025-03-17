@@ -1,0 +1,179 @@
+package com.hanait.gateway.config.jwt.token;
+
+import com.hanait.gateway.config.UserPrinciple;
+import com.hanait.gateway.config.jwt.blacklist.AccessTokenBlackList;
+import com.hanait.gateway.config.jwt.blacklist.RefreshTokenList;
+import com.hanait.gateway.config.jwt.dto.TokenInfo;
+import com.hanait.gateway.config.jwt.dto.TokenValidationResult;
+import com.hanait.gateway.model.Member;
+import com.hanait.gateway.model.Role;
+import io.jsonwebtoken.*;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
+import java.security.Key;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Date;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
+/**
+ * 토큰을 생성하고 검증하는 클래스
+ */
+@Slf4j
+public class TokenProvider {
+
+    private static final String AUTHORITIES_KEY = "auth";
+    private static final String TOKEN_ID_KEY = "tokenId";
+    private static final String USERNAME_KEY = "username";
+
+    private static final String TOKEN_TYPE = "tokenType";
+
+    private final Key hashKey;
+    private final long accessTokenValidationInMilliseconds;
+    private final long refreshTokenValidationInMilliseconds;
+
+    private final AccessTokenBlackList accessTokenBlackList;
+    private final RefreshTokenList refreshTokenList;
+
+    public TokenProvider(String secret, long accessTokenValidationInSeconds, long refreshTokenValidationInMilliseconds,
+                         AccessTokenBlackList accessTokenBlackList, RefreshTokenList refreshTokenList) {
+
+        byte[] keyBytes = Decoders.BASE64.decode(secret);
+        this.hashKey = Keys.hmacShaKeyFor(keyBytes);
+        this.accessTokenValidationInMilliseconds = accessTokenValidationInSeconds * 1000;
+        this.refreshTokenValidationInMilliseconds = refreshTokenValidationInMilliseconds * 1000;
+        this.accessTokenBlackList = accessTokenBlackList;
+        this.refreshTokenList = refreshTokenList;
+    }
+
+    public boolean isAccessTokenBlackList(String accessToken) {
+        if (accessTokenBlackList.isTokenBlackList(accessToken)) {
+            log.info("BlackListed Access Token");
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isRefreshTokenList(String refreshToken) {
+        if (refreshTokenList.isRefreshTokenList(refreshToken)) {
+            log.info("BlackListed refreshToken Token");
+            return true;
+        }
+        return false;
+    }
+
+    //토큰생성
+    public TokenInfo createToken(Member member) {
+
+        long currentTime = (new Date()).getTime();
+
+        //Access 토큰 발급
+        Date accessTokenExpireTime = new Date(currentTime + this.accessTokenValidationInMilliseconds);
+        String accessTokenId = UUID.randomUUID().toString();
+        String accessToken = issueToken(member.getEmail(), TokenType.ACCESS, Role.ROLE_USER, member.getUsername(), accessTokenId, accessTokenExpireTime);
+
+        //Refresh 토큰 발급
+        Date refreshTokenExpireTime = new Date(currentTime + this.refreshTokenValidationInMilliseconds);
+        String refreshTokenId = UUID.randomUUID().toString();
+
+        String refreshToken = issueToken(member.getEmail(), TokenType.REFRESH, Role.ROLE_USER, member.getUsername(), refreshTokenId, refreshTokenExpireTime);
+
+        return TokenInfo.builder()
+                .ownerEmail(member.getEmail())
+                .accessToken(accessToken)
+                .accessTokenExpireTime(accessTokenExpireTime)
+                .accessTokenId(accessTokenId)
+                .refreshToken(refreshToken)
+                .refreshTokenExpireTime(refreshTokenExpireTime)
+                .refreshTokenId(refreshTokenId)
+                .build();
+    }
+
+    private String issueToken(String email, TokenType tokenType, Role role, String username, String tokenId, Date tokenExpireTime) {
+        return Jwts.builder()
+                .setSubject(email)
+                .claim(TOKEN_TYPE, tokenType)
+                .claim(AUTHORITIES_KEY, role)
+                .claim(USERNAME_KEY, username)
+                .claim(TOKEN_ID_KEY, tokenId)
+                .signWith(hashKey, SignatureAlgorithm.HS512)
+                .setExpiration(tokenExpireTime)
+                .compact();
+    }
+
+    public TokenInfo recreateAccessToken(Claims claims) {
+        String email = claims.getSubject();
+        String username = claims.get(USERNAME_KEY, String.class);
+        String refreshTokenId = claims.get(TOKEN_ID_KEY, String.class);
+
+        // 새로운 Access Token 발급
+        long currentTime = (new Date()).getTime();
+        Date accessTokenExpireTime = new Date(currentTime + this.accessTokenValidationInMilliseconds);
+        String accessTokenId = UUID.randomUUID().toString();
+
+        String newAccessToken = issueToken(email, TokenType.ACCESS, Role.ROLE_USER, username, accessTokenId, accessTokenExpireTime);
+
+        return TokenInfo.builder()
+                .ownerEmail(email)
+                .accessToken(newAccessToken)
+                .accessTokenExpireTime(accessTokenExpireTime)
+                .accessTokenId(accessTokenId)
+                .refreshTokenId(refreshTokenId)  // 기존 Refresh Token ID 유지
+                .build();
+    }
+
+    ////토큰 검증 후 TokenValidationResult로 검증 결과 return
+    public TokenValidationResult validateToken(String token) {
+        try {
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(hashKey)
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+            return new TokenValidationResult(TokenStatus.TOKEN_VALID, TokenType.ACCESS, claims.get(TOKEN_ID_KEY, String.class), claims);
+        } catch (ExpiredJwtException e) {
+            log.info("만료된 JWT 토큰");
+            return getExpiredTokenValidationResult(e);
+
+        } catch (SecurityException | MalformedJwtException e) {
+            log.info("잘못된 JWT 서명");
+            return new TokenValidationResult(TokenStatus.TOKEN_WRONG_SIGNATURE, null, null, null);
+        } catch (UnsupportedJwtException e) {
+            log.info("지원되지 않는 JWT 서명");
+            return new TokenValidationResult(TokenStatus.TOKEN_HASH_NOT_SUPPORTED, null, null, null);
+        } catch (IllegalArgumentException e) {
+            log.info("잘못된 JWT 토큰");
+            return new TokenValidationResult(TokenStatus.TOKEN_WRONG_SIGNATURE, null, null, null);
+        }
+    }
+
+    private static TokenValidationResult getExpiredTokenValidationResult(ExpiredJwtException e) {
+        //만료된 토큰의 경우 토큰 자체는 정상이므로 claim들은 가져올 수 있다.
+        Claims claims = e.getClaims();
+        return new TokenValidationResult(TokenStatus.TOKEN_EXPIRED, TokenType.ACCESS,
+                claims.get(TOKEN_ID_KEY, String.class), null);
+    }
+
+    // access 토큰과 claim을 전달받아 UsernamePasswordAuthenticationToken을 생성해 전달
+    public Authentication getAuthentication(String token, Claims claims) {
+        Collection<? extends GrantedAuthority> authorities =
+                Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
+                        .map(SimpleGrantedAuthority::new)
+                        .collect(Collectors.toList());
+
+        // 커스텀한 UserPrinciple 객체 사용 -> 이후 추가적인 데이터를 토큰에 넣을 경우 UserPrinciple 객체 및 이 클래스의 함수들 수정 필요
+        UserPrinciple principle = new UserPrinciple(claims.getSubject(), claims.get(USERNAME_KEY, String.class),
+                authorities);
+
+        return new UsernamePasswordAuthenticationToken(principle, token, authorities);
+    }
+
+}
+
