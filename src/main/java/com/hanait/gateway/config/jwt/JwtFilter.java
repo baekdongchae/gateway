@@ -1,8 +1,7 @@
 package com.hanait.gateway.config.jwt;
 
-import ch.qos.logback.core.util.StringUtil;
-import com.hanait.gateway.config.jwt.dto.TokenInfo;
-import com.hanait.gateway.config.jwt.dto.TokenValidationResult;
+import com.hanait.gateway.config.jwt.token.dto.TokenInfo;
+import com.hanait.gateway.config.jwt.token.dto.TokenValidationResult;
 import com.hanait.gateway.config.jwt.token.TokenProvider;
 import com.hanait.gateway.config.jwt.token.TokenStatus;
 import com.hanait.gateway.config.jwt.token.TokenType;
@@ -15,7 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -37,35 +35,57 @@ public class JwtFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         String token = resolveToken(request);
-
         TokenValidationResult tokenValidationResult = tokenProvider.validateToken(token);
 
-        if (tokenValidationResult.getTokenType().equals(TokenType.ACCESS)) { //access token인 경우
-            // blacklist에 있는지 확인
+        if (tokenValidationResult == null || tokenValidationResult.getTokenType() == null) {
+            handleInvalidToken(request, response, filterChain);
+            return;
+        }
+
+        if (tokenValidationResult.getTokenType().equals(TokenType.ACCESS)) {
             if (tokenProvider.isAccessTokenBlackList(token)) {
                 handleBlackListToken(request, response, filterChain);
                 return;
             }
-
-            //정상 토큰 처리
             handleValidToken(token, tokenValidationResult);
             filterChain.doFilter(request, response);
 
-        } else if (tokenValidationResult.getTokenType().equals(TokenType.REFRESH)){ //refresh token인 경우
-            //refreshTokenList에 있는지 확인
+        } else if (tokenValidationResult.getTokenType().equals(TokenType.REFRESH)) {
             if (tokenProvider.isRefreshTokenList(token)) {
-                //access token 재발급
                 handleRefreshToken(request, response, tokenValidationResult, filterChain);
-            }
-            else {
-                //존재하지 않는 refresh token 처리
+            } else {
                 handleInvalidToken(request, response, filterChain);
             }
-
-        } else { //type이 access, refresh 둘 다 아닌 경우
+        } else {
             handleWrongTypeToken(request, response, filterChain);
         }
     }
+
+//        if (tokenValidationResult.getTokenType().equals(TokenType.ACCESS)) { //access token인 경우
+//            // blacklist에 있는지 확인
+//            if (tokenProvider.isAccessTokenBlackList(token)) {
+//                handleBlackListToken(request, response, filterChain);
+//                return;
+//            }
+//            //정상 토큰 처리
+//            handleValidToken(token, tokenValidationResult);
+//            filterChain.doFilter(request, response);
+//
+//        } else if (tokenValidationResult.getTokenType().equals(TokenType.REFRESH)){ //refresh token인 경우
+//            //refreshTokenList에 있는지 확인
+//            if (tokenProvider.isRefreshTokenList(token)) {
+//                //access token 재발급
+//                handleRefreshToken(request, response, tokenValidationResult, filterChain);
+//            }
+//            else {
+//                //존재하지 않는 refresh token 처리
+//                handleInvalidToken(request, response, filterChain);
+//            }
+//
+//        } else { //type이 access, refresh 둘 다 아닌 경우
+//            handleWrongTypeToken(request, response, filterChain);
+//        }
+//    }
 
     private void handleBlackListToken(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         request.setAttribute("result", new TokenValidationResult(TokenStatus.TOKEN_IS_BLACKLIST, null, null, null));

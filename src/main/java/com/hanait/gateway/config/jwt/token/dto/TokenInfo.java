@@ -1,11 +1,10 @@
-package com.hanait.gateway.config.jwt.dto;
+package com.hanait.gateway.config.jwt.token.dto;
 
 import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
 
 import java.util.Date;
-import java.util.SimpleTimeZone;
 
 /**
  * 토큰의 정보를 담고 있는 클래스

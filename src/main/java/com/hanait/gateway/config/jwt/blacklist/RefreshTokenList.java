@@ -1,5 +1,6 @@
 package com.hanait.gateway.config.jwt.blacklist;
 
+import com.hanait.gateway.config.jwt.token.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,7 +22,14 @@ public class RefreshTokenList {
 
     public void saveRefreshToken(String key, Object o) {
         redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(o.getClass()));
-        redisTemplate.opsForValue().set(key, o, refreshTokenTimeoutInSeconds * 10000, TimeUnit.MILLISECONDS);
+        redisTemplate.opsForValue().set(key, o, refreshTokenTimeoutInSeconds * 1000, TimeUnit.MILLISECONDS);
+
+        // 디버깅용 로그 추가
+        log.info("Refresh Token 저장: key={}, value={}", key, o);
+
+        // Redis에 실제로 저장되었는지 조회
+        Object savedValue = redisTemplate.opsForValue().get(key);
+        log.info("저장된 Refresh Token 확인: key={}, value={}", key, savedValue);
     }
 
     public boolean isRefreshTokenList(String key) {

@@ -1,7 +1,6 @@
-package com.hanait.gateway.config;
+package com.hanait.gateway.principle;
 
 import lombok.Getter;
-import org.hibernate.sql.exec.spi.StandardEntityInstanceResolver;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 

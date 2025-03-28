@@ -1,11 +1,11 @@
 package com.hanait.gateway.config.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hanait.gateway.config.jwt.dto.TokenInfo;
-import com.hanait.gateway.config.jwt.dto.TokenValidationResult;
+import com.hanait.gateway.config.jwt.token.dto.TokenInfo;
+import com.hanait.gateway.config.jwt.token.dto.TokenValidationResult;
 import com.hanait.gateway.config.jwt.status.ResponseStatusCode;
 import com.hanait.gateway.config.jwt.token.TokenStatus;
-import com.hanait.gateway.config.jwt.dto.ApiResponseJson;
+import com.hanait.gateway.config.jwt.token.ApiResponseJson;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,6 +19,11 @@ import java.util.Map;
 
 import static com.hanait.gateway.config.jwt.status.ResponseStatusCode.TOKEN_REFRESHED;
 import static com.hanait.gateway.config.jwt.status.ResponseStatusCode.TOKEN_WRONG_TYPE;
+
+/**
+ * 인증(Authentication) 예외가 발생했을때 처리하는 클래스
+ * ExceptionTranslationFilter 아래에서 AuthenticationException 발생 -> JwtAuthenticationEntryPoint에서 처리
+ */
 
 @Slf4j
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
@@ -36,6 +41,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
         String errorMessage = result.getTokenStatus().getMessage();
         int errorCode;
         TokenInfo tokenInfo = null;
+
 
         switch (result.getTokenStatus()) {
             case TOKEN_EXPIRED -> errorCode = ResponseStatusCode.TOKEN_EXPIRED;

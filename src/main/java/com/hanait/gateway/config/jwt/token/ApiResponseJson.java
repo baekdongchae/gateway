@@ -1,4 +1,4 @@
-package com.hanait.gateway.config.jwt.dto;
+package com.hanait.gateway.config.jwt.token;
 
 
 import com.hanait.gateway.config.jwt.status.ResponseStatusCode;

@@ -1,11 +1,11 @@
 package com.hanait.gateway.controller;
 
-import com.hanait.gateway.config.UserPrinciple;
-import com.hanait.gateway.config.jwt.dto.TokenInfo;
+import com.hanait.gateway.principle.UserPrinciple;
+import com.hanait.gateway.config.jwt.token.dto.TokenInfo;
 import com.hanait.gateway.config.jwt.dto.member.CreateMemberRequest;
 import com.hanait.gateway.config.jwt.dto.member.LoginMemberRequest;
 import com.hanait.gateway.config.jwt.dto.member.MemberInfoDto;
-import com.hanait.gateway.config.jwt.dto.ApiResponseJson;
+import com.hanait.gateway.config.jwt.token.ApiResponseJson;
 import com.hanait.gateway.model.Member;
 import com.hanait.gateway.service.MemberService;
 import jakarta.validation.Valid;
@@ -68,7 +68,8 @@ public class MemberController {
     }
 
     @PostMapping("/user/logout")
-    public ApiResponseJson logout(@AuthenticationPrincipal UserPrinciple userPrinciple, @RequestHeader("Authorization") String authHeader) {
+    public ApiResponseJson logout(@AuthenticationPrincipal UserPrinciple userPrinciple,
+                                  @RequestHeader("Authorization") String authHeader) {
         String email = userPrinciple.getEmail();
 
         log.info("로그아웃 이메일: {}", email);

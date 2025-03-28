@@ -1,10 +1,10 @@
 package com.hanait.gateway.config.jwt.token;
 
-import com.hanait.gateway.config.UserPrinciple;
+import com.hanait.gateway.config.jwt.token.dto.TokenInfo;
+import com.hanait.gateway.config.jwt.token.dto.TokenValidationResult;
+import com.hanait.gateway.principle.UserPrinciple;
 import com.hanait.gateway.config.jwt.blacklist.AccessTokenBlackList;
 import com.hanait.gateway.config.jwt.blacklist.RefreshTokenList;
-import com.hanait.gateway.config.jwt.dto.TokenInfo;
-import com.hanait.gateway.config.jwt.dto.TokenValidationResult;
 import com.hanait.gateway.model.Member;
 import com.hanait.gateway.model.Role;
 import io.jsonwebtoken.*;
@@ -56,6 +56,11 @@ public class TokenProvider {
     public boolean isAccessTokenBlackList(String accessToken) {
         if (accessTokenBlackList.isTokenBlackList(accessToken)) {
             log.info("BlackListed Access Token");
+
+            // 블랙리스트에서 해당 Access Token의 값을 조회
+            Object value = accessTokenBlackList.getBlackList(accessToken);
+            log.info("블랙리스트 조회 결과: key={}, value={}", accessToken, value);
+
             return true;
         }
         return false;
@@ -82,8 +87,9 @@ public class TokenProvider {
         //Refresh 토큰 발급
         Date refreshTokenExpireTime = new Date(currentTime + this.refreshTokenValidationInMilliseconds);
         String refreshTokenId = UUID.randomUUID().toString();
-
         String refreshToken = issueToken(member.getEmail(), TokenType.REFRESH, Role.ROLE_USER, member.getUsername(), refreshTokenId, refreshTokenExpireTime);
+
+        refreshTokenList.saveRefreshToken(refreshToken, refreshTokenId);
 
         return TokenInfo.builder()
                 .ownerEmail(member.getEmail())
@@ -131,6 +137,12 @@ public class TokenProvider {
 
     ////토큰 검증 후 TokenValidationResult로 검증 결과 return
     public TokenValidationResult validateToken(String token) {
+
+        if (token == null || token.trim().isEmpty()) {
+            log.error("토큰이 null이거나 비어있습니다.");
+            return new TokenValidationResult(TokenStatus.TOKEN_WRONG_SIGNATURE, null, null, null);
+        }
+
         try {
             Claims claims = Jwts.parserBuilder()
                     .setSigningKey(hashKey)
@@ -139,17 +151,17 @@ public class TokenProvider {
                     .getBody();
             return new TokenValidationResult(TokenStatus.TOKEN_VALID, TokenType.ACCESS, claims.get(TOKEN_ID_KEY, String.class), claims);
         } catch (ExpiredJwtException e) {
-            log.info("만료된 JWT 토큰");
+            log.info("만료된 JWT 토큰: {}", e.getMessage());
             return getExpiredTokenValidationResult(e);
 
         } catch (SecurityException | MalformedJwtException e) {
-            log.info("잘못된 JWT 서명");
+            log.info("잘못된 JWT 서명: {}", e.getMessage());
             return new TokenValidationResult(TokenStatus.TOKEN_WRONG_SIGNATURE, null, null, null);
         } catch (UnsupportedJwtException e) {
-            log.info("지원되지 않는 JWT 서명");
+            log.info("지원되지 않는 JWT 토큰: {}", e.getMessage());
             return new TokenValidationResult(TokenStatus.TOKEN_HASH_NOT_SUPPORTED, null, null, null);
         } catch (IllegalArgumentException e) {
-            log.info("잘못된 JWT 토큰");
+            log.info("잘못된 JWT 토큰: {}", e.getMessage());  // 예외 메시지 로그 추가
             return new TokenValidationResult(TokenStatus.TOKEN_WRONG_SIGNATURE, null, null, null);
         }
     }
@@ -163,8 +175,8 @@ public class TokenProvider {
 
     // access 토큰과 claim을 전달받아 UsernamePasswordAuthenticationToken을 생성해 전달
     public Authentication getAuthentication(String token, Claims claims) {
-        Collection<? extends GrantedAuthority> authorities =
-                Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
+        Collection<? extends GrantedAuthority> authorities = Arrays.stream(claims.get(AUTHORITIES_KEY).toString()
+                        .split(","))
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());
 

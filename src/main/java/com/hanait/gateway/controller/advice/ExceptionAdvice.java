@@ -1,7 +1,7 @@
 package com.hanait.gateway.controller.advice;
 
 import com.hanait.gateway.config.jwt.status.ResponseStatusCode;
-import com.hanait.gateway.config.jwt.dto.ApiResponseJson;
+import com.hanait.gateway.config.jwt.token.ApiResponseJson;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;

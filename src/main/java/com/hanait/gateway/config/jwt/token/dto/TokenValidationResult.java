@@ -1,9 +1,8 @@
-package com.hanait.gateway.config.jwt.dto;
+package com.hanait.gateway.config.jwt.token.dto;
 
 import com.hanait.gateway.config.jwt.token.TokenStatus;
 import com.hanait.gateway.config.jwt.token.TokenType;
 import io.jsonwebtoken.Claims;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.ToString;
 

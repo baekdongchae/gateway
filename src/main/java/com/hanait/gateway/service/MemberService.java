@@ -1,7 +1,8 @@
 package com.hanait.gateway.service;
 
 import com.hanait.gateway.config.jwt.blacklist.AccessTokenBlackList;
-import com.hanait.gateway.config.jwt.dto.TokenInfo;
+import com.hanait.gateway.config.jwt.blacklist.RefreshTokenList;
+import com.hanait.gateway.config.jwt.token.dto.TokenInfo;
 import com.hanait.gateway.config.jwt.dto.member.CreateMemberRequest;
 import com.hanait.gateway.config.jwt.dto.member.MemberInfoDto;
 import com.hanait.gateway.config.jwt.token.TokenProvider;
@@ -28,6 +29,7 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
     private final AccessTokenBlackList accessTokenBlackList;
+    private final RefreshTokenList refreshTokenList;
 
     //회원가입
     public Member createMember(CreateMemberRequest request) {
@@ -74,7 +76,7 @@ public class MemberService {
     }
 
     //로그아웃
-    public void logout(String accessToken, String email) {
+    public void logout(String accessToken,String email) {
         accessTokenBlackList.setBlackList(accessToken, email);
     }
 
