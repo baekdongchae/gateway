@@ -8,15 +8,13 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class MemberInfoDto {
-    private String email;
-    private String username;
+public class UserInfoDto {
+    private String userId;
     private Role role;
 
     @Builder
-    public MemberInfoDto(String email, String username, Role role) {
-        this.email = email;
-        this.username = username;
+    public UserInfoDto(String userId, Role role) {
+        this.userId = userId;
         this.role = role;
     }
 }

@@ -18,16 +18,22 @@ public class TokenInfo {
     private String refreshToken;
     private Date refreshTokenExpireTime;
     private String refreshTokenId;
-    private String ownerEmail; //소유자의 이메일
+    private String ownerId; //소유자의 이메일
+    private String requestId; // API 요청 추적을 위한 고유 UUID
 
     @Builder
-    public TokenInfo(String accessToken, Date accessTokenExpireTime, String accessTokenId, String refreshToken, Date refreshTokenExpireTime, String refreshTokenId, String ownerEmail) {
+    public TokenInfo(String accessToken, Date accessTokenExpireTime, String accessTokenId, String refreshToken, Date refreshTokenExpireTime, String refreshTokenId, String ownerId) {
         this.accessToken = accessToken;
         this.accessTokenExpireTime = accessTokenExpireTime;
         this.accessTokenId = accessTokenId;
         this.refreshToken = refreshToken;
         this.refreshTokenExpireTime = refreshTokenExpireTime;
         this.refreshTokenId = refreshTokenId;
-        this.ownerEmail = ownerEmail;
+        this.ownerId = ownerId;
+    }
+    
+    // requestId는 Builder 패턴으로 생성하지 않고 별도로 설정
+    public void setRequestId(String requestId) {
+        this.requestId = requestId;
     }
 }

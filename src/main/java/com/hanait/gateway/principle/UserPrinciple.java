@@ -15,21 +15,18 @@ import java.util.Collection;
 public class UserPrinciple extends User {   //spinrg security의 User class 상속
 
     private static final String PASSWORD_ERASED_VALUE = "[PASSWORD_ERASED]";
-    private final String email;
+    private final String userCode;
 
-    public UserPrinciple(String email, String username, Collection<? extends GrantedAuthority> authorities) {
-        super(username, PASSWORD_ERASED_VALUE, authorities);
-        this.email = email;
+    public UserPrinciple(String userCode, Collection<? extends GrantedAuthority> authorities) {
+        super(userCode, PASSWORD_ERASED_VALUE, authorities);
+        this.userCode = userCode;
     }
 
     @Override
     public String toString() {
         return "UserPrinciple(" +
-                "email=" + email +
-                " username=" + getUsername() +
+                "userCode=" + userCode +
                 " role=" + getAuthorities() +
                 ')';
     }
-
-
 }

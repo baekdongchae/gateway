@@ -1,12 +1,12 @@
 package com.hanait.gateway.config.jwt.token;
 
-import com.hanait.gateway.config.jwt.token.dto.TokenInfo;
-import com.hanait.gateway.config.jwt.token.dto.TokenValidationResult;
-import com.hanait.gateway.principle.UserPrinciple;
 import com.hanait.gateway.config.jwt.blacklist.AccessTokenBlackList;
 import com.hanait.gateway.config.jwt.blacklist.RefreshTokenList;
-import com.hanait.gateway.model.Member;
+import com.hanait.gateway.config.jwt.token.dto.TokenInfo;
+import com.hanait.gateway.config.jwt.token.dto.TokenValidationResult;
+import com.hanait.gateway.model.User;
 import com.hanait.gateway.model.Role;
+import com.hanait.gateway.principle.UserPrinciple;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -31,7 +31,6 @@ public class TokenProvider {
 
     private static final String AUTHORITIES_KEY = "auth";
     private static final String TOKEN_ID_KEY = "tokenId";
-    private static final String USERNAME_KEY = "username";
 
     private static final String TOKEN_TYPE = "tokenType";
 
@@ -75,39 +74,37 @@ public class TokenProvider {
     }
 
     //토큰생성
-    public TokenInfo createToken(Member member) {
+    public TokenInfo createToken(User user) {
 
         long currentTime = (new Date()).getTime();
 
         //Access 토큰 발급
         Date accessTokenExpireTime = new Date(currentTime + this.accessTokenValidationInMilliseconds);
         String accessTokenId = UUID.randomUUID().toString();
-        String accessToken = issueToken(member.getEmail(), TokenType.ACCESS, Role.ROLE_USER, member.getUsername(), accessTokenId, accessTokenExpireTime);
+        String accessToken = issueToken(user.getUserId(), TokenType.ACCESS, Role.ROLE_USER, accessTokenId, accessTokenExpireTime);
 
         //Refresh 토큰 발급
         Date refreshTokenExpireTime = new Date(currentTime + this.refreshTokenValidationInMilliseconds);
         String refreshTokenId = UUID.randomUUID().toString();
-        String refreshToken = issueToken(member.getEmail(), TokenType.REFRESH, Role.ROLE_USER, member.getUsername(), refreshTokenId, refreshTokenExpireTime);
+        String refreshToken = issueToken(user.getUserId(), TokenType.REFRESH, Role.ROLE_USER, refreshTokenId, refreshTokenExpireTime);
 
         refreshTokenList.saveRefreshToken(refreshToken, refreshTokenId);
 
         return TokenInfo.builder()
-                .ownerEmail(member.getEmail())
+                .ownerId(user.getUserId())
                 .accessToken(accessToken)
                 .accessTokenExpireTime(accessTokenExpireTime)
                 .accessTokenId(accessTokenId)
                 .refreshToken(refreshToken)
                 .refreshTokenExpireTime(refreshTokenExpireTime)
-                .refreshTokenId(refreshTokenId)
-                .build();
+                .refreshTokenId(refreshTokenId).build();
     }
 
-    private String issueToken(String email, TokenType tokenType, Role role, String username, String tokenId, Date tokenExpireTime) {
+    private String issueToken(String userId, TokenType tokenType, Role role, String tokenId, Date tokenExpireTime) {
         return Jwts.builder()
-                .setSubject(email)
+                .setSubject(userId)
                 .claim(TOKEN_TYPE, tokenType)
                 .claim(AUTHORITIES_KEY, role)
-                .claim(USERNAME_KEY, username)
                 .claim(TOKEN_ID_KEY, tokenId)
                 .signWith(hashKey, SignatureAlgorithm.HS512)
                 .setExpiration(tokenExpireTime)
@@ -115,8 +112,7 @@ public class TokenProvider {
     }
 
     public TokenInfo recreateAccessToken(Claims claims) {
-        String email = claims.getSubject();
-        String username = claims.get(USERNAME_KEY, String.class);
+        String userId = claims.getSubject();
         String refreshTokenId = claims.get(TOKEN_ID_KEY, String.class);
 
         // 새로운 Access Token 발급
@@ -124,10 +120,10 @@ public class TokenProvider {
         Date accessTokenExpireTime = new Date(currentTime + this.accessTokenValidationInMilliseconds);
         String accessTokenId = UUID.randomUUID().toString();
 
-        String newAccessToken = issueToken(email, TokenType.ACCESS, Role.ROLE_USER, username, accessTokenId, accessTokenExpireTime);
+        String newAccessToken = issueToken(userId, TokenType.ACCESS, Role.ROLE_USER, accessTokenId, accessTokenExpireTime);
 
         return TokenInfo.builder()
-                .ownerEmail(email)
+                .ownerId(userId)
                 .accessToken(newAccessToken)
                 .accessTokenExpireTime(accessTokenExpireTime)
                 .accessTokenId(accessTokenId)
@@ -181,7 +177,7 @@ public class TokenProvider {
                         .collect(Collectors.toList());
 
         // 커스텀한 UserPrinciple 객체 사용 -> 이후 추가적인 데이터를 토큰에 넣을 경우 UserPrinciple 객체 및 이 클래스의 함수들 수정 필요
-        UserPrinciple principle = new UserPrinciple(claims.getSubject(), claims.get(USERNAME_KEY, String.class),
+        UserPrinciple principle = new UserPrinciple(claims.getSubject(), /*(claims.get(USERNAME_KEY, String.class),*/
                 authorities);
 
         return new UsernamePasswordAuthenticationToken(principle, token, authorities);

@@ -1,6 +1,5 @@
 package com.hanait.gateway.config.jwt.dto.member;
 
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -10,10 +9,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class LoginMemberRequest {
+public class LoginUserRequest {
 
-    @Email
-    private String email;
     @NotEmpty
-    private String password;
+    private String userId;
+    @NotEmpty
+    private String userPw;
 }
