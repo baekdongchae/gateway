@@ -1,0 +1,109 @@
+2025-04-07 09:37:22.273 [restartedMain] INFO  c.hanait.gateway.GatewayApplication - Starting GatewayApplication using Java 17 with PID 23260 (C:\Users\백동채\IdeaProjects\HanaitProject\gateway\out\production\classes started by 백동채 in C:\Users\백동채\IdeaProjects\HanaitProject\gateway)
+2025-04-07 09:37:22.281 [restartedMain] INFO  c.hanait.gateway.GatewayApplication - No active profile set, falling back to 1 default profile: "default"
+2025-04-07 09:37:22.377 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-04-07 09:37:22.378 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-04-07 09:37:24.839 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2025-04-07 09:37:24.843 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-07 09:37:25.167 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 310 ms. Found 1 JPA repository interface.
+2025-04-07 09:37:25.199 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2025-04-07 09:37:25.202 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-04-07 09:37:25.233 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.hanait.gateway.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-04-07 09:37:25.233 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 14 ms. Found 0 Redis repository interfaces.
+2025-04-07 09:37:26.196 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-04-07 09:37:26.210 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-04-07 09:37:26.210 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-04-07 09:37:26.286 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-04-07 09:37:26.287 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 3908 ms
+2025-04-07 09:37:26.846 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-04-07 09:37:26.935 [restartedMain] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.8.Final
+2025-04-07 09:37:26.986 [restartedMain] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-04-07 09:37:27.451 [restartedMain] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-04-07 09:37:27.492 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-04-07 09:37:27.646 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.mariadb.jdbc.Connection@7143f597
+2025-04-07 09:37:27.647 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-04-07 09:37:27.737 [restartedMain] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 10.9.7
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-04-07 09:37:29.349 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-04-07 09:37:29.518 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-07 09:37:29.984 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-04-07 09:37:30.003 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 08ede4b3-dd65-436f-a1f3-bd5054e9a8e9
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-04-07 09:37:30.011 [restartedMain] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-04-07 09:37:30.463 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-04-07 09:37:30.729 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-04-07 09:37:30.775 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-04-07 09:37:30.786 [restartedMain] INFO  c.hanait.gateway.GatewayApplication - Started GatewayApplication in 9.247 seconds (process running for 10.827)
+2025-04-07 09:37:40.416 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-04-07 09:37:41.655 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-04-07 09:37:41.794 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-04-07 09:37:41.797 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-04-07 09:37:41.801 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-04-07 09:38:29.160 [restartedMain] INFO  c.hanait.gateway.GatewayApplication - Starting GatewayApplication using Java 17 with PID 21740 (C:\Users\백동채\IdeaProjects\HanaitProject\gateway\out\production\classes started by 백동채 in C:\Users\백동채\IdeaProjects\HanaitProject\gateway)
+2025-04-07 09:38:29.163 [restartedMain] INFO  c.hanait.gateway.GatewayApplication - No active profile set, falling back to 1 default profile: "default"
+2025-04-07 09:38:29.232 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-04-07 09:38:29.232 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-04-07 09:38:30.185 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2025-04-07 09:38:30.187 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-07 09:38:30.358 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 161 ms. Found 1 JPA repository interface.
+2025-04-07 09:38:30.371 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2025-04-07 09:38:30.372 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-04-07 09:38:30.394 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.hanait.gateway.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-04-07 09:38:30.394 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 14 ms. Found 0 Redis repository interfaces.
+2025-04-07 09:38:31.152 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-04-07 09:38:31.163 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-04-07 09:38:31.163 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-04-07 09:38:31.225 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-04-07 09:38:31.225 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1993 ms
+2025-04-07 09:38:31.640 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-04-07 09:38:31.693 [restartedMain] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.8.Final
+2025-04-07 09:38:31.726 [restartedMain] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-04-07 09:38:31.991 [restartedMain] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-04-07 09:38:32.025 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-04-07 09:38:32.101 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.mariadb.jdbc.Connection@27f17a39
+2025-04-07 09:38:32.103 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-04-07 09:38:32.159 [restartedMain] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 10.9.7
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-04-07 09:38:33.437 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-04-07 09:38:33.533 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-07 09:38:33.875 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-04-07 09:38:33.893 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: ef3d3036-8e01-46d0-bd54-48c6880de9ad
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-04-07 09:38:33.900 [restartedMain] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-04-07 09:38:34.274 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-04-07 09:38:34.502 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-04-07 09:38:34.543 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-04-07 09:38:34.555 [restartedMain] INFO  c.hanait.gateway.GatewayApplication - Started GatewayApplication in 5.901 seconds (process running for 6.751)
+2025-04-07 09:38:43.031 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-07 09:38:43.032 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-04-07 09:38:43.033 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2025-04-07 09:38:43.057 [http-nio-8080-exec-1] ERROR c.h.g.config.jwt.token.TokenProvider - 토큰이 null이거나 비어있습니다.
+2025-04-07 09:38:43.182 [http-nio-8080-exec-1] INFO  c.h.g.controller.UserController - API Call [bb98a13b-a224-49a7-b4ae-ae5ddde0ac63] - Login request received for user: test2
+2025-04-07 09:38:44.165 [http-nio-8080-exec-1] INFO  c.h.g.c.j.blacklist.RefreshTokenList - Refresh Token 저장: key=eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0MiIsInRva2VuVHlwZSI6IlJFRlJFU0giLCJhdXRoIjoiUk9MRV9VU0VSIiwidG9rZW5JZCI6ImRkY2Q0N2JkLWJkNjktNDM2YS1iOGJlLTI4ZTM4ZGNkZDQxMyIsImV4cCI6MTc0Mzk4NjU2M30.eIo4VBSADI3RKuEPWWpRYFS7Ur-HfZmosBEJQ6oYwtwM-I4r8cL9CU1cjI0LljV6P78W4g-IUJx_MBR2ZVzKDg, value=ddcd47bd-bd69-436a-b8be-28e38dcdd413
+2025-04-07 09:38:44.168 [http-nio-8080-exec-1] INFO  c.h.g.c.j.blacklist.RefreshTokenList - 저장된 Refresh Token 확인: key=eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0MiIsInRva2VuVHlwZSI6IlJFRlJFU0giLCJhdXRoIjoiUk9MRV9VU0VSIiwidG9rZW5JZCI6ImRkY2Q0N2JkLWJkNjktNDM2YS1iOGJlLTI4ZTM4ZGNkZDQxMyIsImV4cCI6MTc0Mzk4NjU2M30.eIo4VBSADI3RKuEPWWpRYFS7Ur-HfZmosBEJQ6oYwtwM-I4r8cL9CU1cjI0LljV6P78W4g-IUJx_MBR2ZVzKDg, value=ddcd47bd-bd69-436a-b8be-28e38dcdd413
+2025-04-07 09:38:44.182 [http-nio-8080-exec-1] INFO  c.h.g.controller.UserController - API Call [bb98a13b-a224-49a7-b4ae-ae5ddde0ac63] - Token issued for user: test2
+2025-04-07 09:38:44.182 [http-nio-8080-exec-1] INFO  c.h.g.controller.UserController - clientIP [0:0:0:0:0:0:0:1] - Token issued for user: test2
+2025-04-07 09:39:48.771 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-04-07 09:39:50.104 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-04-07 09:39:50.255 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-04-07 09:39:50.265 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-04-07 09:39:50.279 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.

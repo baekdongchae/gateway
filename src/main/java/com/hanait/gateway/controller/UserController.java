@@ -8,6 +8,7 @@ import com.hanait.gateway.config.jwt.dto.member.UserInfoDto;
 import com.hanait.gateway.config.jwt.token.ApiResponseJson;
 import com.hanait.gateway.model.User;
 import com.hanait.gateway.service.UserService;
+import com.hanait.gateway.util.IpAddressUtil;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -59,6 +60,8 @@ public class UserController {
     @PostMapping("/user/login")
     public ApiResponseJson login(@Valid @RequestBody LoginUserRequest request, BindingResult bindingResult) {
         String requestUUID = generateRequestUUID();
+        String clientIp = IpAddressUtil.getClientIpAddress();
+
         log.info("API Call [{}] - Login request received for user: {}", requestUUID, request.getUserId());
         
         if (bindingResult.hasErrors()) {
@@ -69,9 +72,11 @@ public class UserController {
         TokenInfo tokenInfo = userService.loginMember(request.getUserId(), request.getUserPw());
 
         log.info("API Call [{}] - Token issued for user: {}", requestUUID, request.getUserId());
+        log.info("clientIP [{}] - Token issued for user: {}", clientIp, request.getUserId());
 
         // Add the requestId to the response
         tokenInfo.setRequestId(requestUUID);
+        tokenInfo.setIpAdd(clientIp);
         
         return new ApiResponseJson(HttpStatus.OK, tokenInfo);
     }

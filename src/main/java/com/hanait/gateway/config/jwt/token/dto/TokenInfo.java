@@ -20,9 +20,11 @@ public class TokenInfo {
     private String refreshTokenId;
     private String ownerId; //소유자의 이메일
     private String requestId; // API 요청 추적을 위한 고유 UUID
+    private String IpAdd;
 
     @Builder
-    public TokenInfo(String accessToken, Date accessTokenExpireTime, String accessTokenId, String refreshToken, Date refreshTokenExpireTime, String refreshTokenId, String ownerId) {
+    public TokenInfo(String accessToken, Date accessTokenExpireTime, String accessTokenId, String refreshToken,
+                     Date refreshTokenExpireTime, String refreshTokenId, String ownerId, String IpAdd) {
         this.accessToken = accessToken;
         this.accessTokenExpireTime = accessTokenExpireTime;
         this.accessTokenId = accessTokenId;
@@ -30,6 +32,7 @@ public class TokenInfo {
         this.refreshTokenExpireTime = refreshTokenExpireTime;
         this.refreshTokenId = refreshTokenId;
         this.ownerId = ownerId;
+        this.IpAdd = IpAdd;
     }
     
     // requestId는 Builder 패턴으로 생성하지 않고 별도로 설정
