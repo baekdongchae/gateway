@@ -4,7 +4,8 @@ import com.hanait.gateway.config.jwt.dto.member.UserInfoDto;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table
 @AllArgsConstructor

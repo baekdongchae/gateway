@@ -1,0 +1,121 @@
+version: '3.8'
+
+services:
+  springboot-app:
+    build: .
+    container_name: hanait-gateway
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mariadb
+      - redis
+      - mongodb
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mariadb://mariadb:3306/jwt?serverTimezone=Asia/Seoul
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=1234
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT=org.hibernate.dialect.MariaDBDialect
+      - HAPI_FHIR_BASE_URL=http://hapi-fhir-jpaserver-start:8090
+      # Redis connection configuration
+      - SPRING_DATA_REDIS_HOST=redis
+      - SPRING_DATA_REDIS_PORT=6379
+    volumes:
+      - springboot_logs:/app/logs
+    networks:
+      - redis-network
+      - app-network
+      - fhir-network
+    restart: always
+
+  mariadb:
+    image: mariadb:10.9
+    ports:
+      - "3306:3306"
+    environment:
+      - MARIADB_ROOT_PASSWORD=1234
+      - MARIADB_DATABASE=jwt
+    volumes:
+      - mariadb-data:/var/lib/mysql
+      # 초기화 스크립트가 필요한 경우 아래 라인 추가
+      # - ./init-scripts:/docker-entrypoint-initdb.d
+    networks:
+      - redis-network
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    restart: always
+
+  redis:
+    image: redis:latest
+    hostname: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - redis-network
+    restart: always
+    command: redis-server --appendonly yes
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - springboot-app
+    networks:
+      - app-network
+      - fhir-network
+
+
+  mongodb:
+    image: mongo:6
+    container_name: mongodb
+    restart: unless-stopped
+    # ports:
+    #   - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: pass123
+    volumes:
+      - mongodb_data:/data/db
+      - mongodb_config:/data/configdb
+    networks:
+      - app-network
+
+  mongo-express:
+    image: mongo-express:1.0.0-alpha.4
+    container_name: mongo-express
+    restart: unless-stopped
+    depends_on:
+      - mongodb
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongodb
+      ME_CONFIG_MONGODB_ADMINUSERNAME: admin
+      ME_CONFIG_MONGODB_ADMINPASSWORD: pass123
+      ME_CONFIG_BASICAUTH: "false"
+      ME_CONFIG_SITE_CSRF_ENABLED: "false"
+    networks:
+      - app-network
+
+volumes:
+  mariadb-data:
+  redis-data:
+  mongodb_data:
+    name: mongodb_data
+  mongodb_config:
+    name: mongodb_config
+  springboot_logs:
+
+networks:
+  redis-network:
+    external: true
+  app-network:
+    driver: bridge
+  fhir-network: # 추가된 네트워크 참조
+    external: true  # 외부 네트워크로 설정
