@@ -29,7 +29,6 @@ public class SecurityConfig {
     private final String[] permitAllUrl = {"/error", "/user/login"};
     private final String[] anonymousUrl = {"/user/register"};
 
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
@@ -45,6 +44,7 @@ public class SecurityConfig {
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(auth -> auth //접근 url 권한 관리
                         .requestMatchers(adminUrl).hasAnyRole("ADMIN")
+//                        .requestMatchers("/api/fhir/**").hasAnyRole("USER", "ADMIN")
                         .requestMatchers(permitAllUrl).permitAll()
                         .requestMatchers(anonymousUrl).anonymous()
                         .anyRequest().authenticated() //이 외의 url은 인증받은 사용자만 접근 가능

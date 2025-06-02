@@ -17,19 +17,16 @@ public class ApiResponseJson {
     public HttpStatus httpStatus;
     public int code;
     public Object data;
-    public String requestId; // UUID for API call tracking
 
     public ApiResponseJson(HttpStatus httpStatus, int code, Object data) { //에러 발생 시
         this.httpStatus = httpStatus;
         this.code = code;
         this.data = data;
-        this.requestId = UuidGenerator.generateUuid();
     }
 
     public ApiResponseJson(HttpStatus httpStatus, Object data) { //성공 시
         this.httpStatus = httpStatus;
         this.code = ResponseStatusCode.OK;
         this.data = data;
-        this.requestId = UuidGenerator.generateUuid();
     }
 }

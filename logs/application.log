@@ -1,27 +1,36 @@
-2025-04-15 15:26:47.034 [restartedMain] INFO  c.hanait.gateway.GatewayApplication - Starting GatewayApplication using Java 17 with PID 28240 (C:\Users\백동채\IdeaProjects\HanaitProject\gateway\out\production\classes started by 백동채 in C:\Users\백동채\IdeaProjects\HanaitProject\gateway)
-2025-04-15 15:26:47.043 [restartedMain] INFO  c.hanait.gateway.GatewayApplication - No active profile set, falling back to 1 default profile: "default"
-2025-04-15 15:26:47.144 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
-2025-04-15 15:26:47.145 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
-2025-04-15 15:26:48.647 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
-2025-04-15 15:26:48.650 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2025-04-15 15:26:48.905 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 245 ms. Found 1 JPA repository interface.
-2025-04-15 15:26:48.928 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
-2025-04-15 15:26:48.930 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2025-04-15 15:26:48.958 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.hanait.gateway.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2025-04-15 15:26:48.958 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 14 ms. Found 0 Redis repository interfaces.
-2025-04-15 15:26:49.954 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
-2025-04-15 15:26:49.969 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
-2025-04-15 15:26:49.969 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
-2025-04-15 15:26:50.046 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
-2025-04-15 15:26:50.046 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2900 ms
-2025-04-15 15:26:50.791 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
-2025-04-15 15:26:50.889 [restartedMain] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.8.Final
-2025-04-15 15:26:50.943 [restartedMain] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
-2025-04-15 15:26:51.338 [restartedMain] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
-2025-04-15 15:26:51.393 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-2025-04-15 15:26:51.567 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.mariadb.jdbc.Connection@6ea29e7e
-2025-04-15 15:26:51.568 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-2025-04-15 15:26:51.648 [restartedMain] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+2025-04-29 15:31:26.250 [restartedMain] INFO  c.hanait.gateway.GatewayApplication - Starting GatewayApplication using Java 17 with PID 10288 (C:\Users\백동채\IdeaProjects\HanaitProject\gateway\out\production\classes started by 백동채 in C:\Users\백동채\IdeaProjects\HanaitProject\gateway)
+2025-04-29 15:31:26.258 [restartedMain] INFO  c.hanait.gateway.GatewayApplication - The following 1 profile is active: "local"
+2025-04-29 15:31:26.342 [restartedMain] INFO  o.s.b.d.restart.ChangeableUrls - The Class-Path manifest attribute in C:\Users\백동채\.gradle\caches\modules-2\files-2.1\com.oracle.database.jdbc\ojdbc11\23.5.0.24.07\6e07003d57be5e280ef0492209e20fa27edec5b6\ojdbc11-23.5.0.24.07.jar referenced one or more files that do not exist: file:/C:/Users/백동채/.gradle/caches/modules-2/files-2.1/com.oracle.database.jdbc/ojdbc11/23.5.0.24.07/6e07003d57be5e280ef0492209e20fa27edec5b6/oraclepki.jar
+2025-04-29 15:31:26.349 [restartedMain] INFO  o.s.b.d.restart.ChangeableUrls - The Class-Path manifest attribute in C:\Users\백동채\.gradle\caches\modules-2\files-2.1\net.sourceforge.plantuml\plantuml-mit\1.2023.9\6ca77dd474eae7a2a1581e4b236ede5515ae25a7\plantuml-mit-1.2023.9.jar referenced one or more files that do not exist: file:/C:/Users/백동채/.gradle/caches/modules-2/files-2.1/net.sourceforge.plantuml/plantuml-mit/1.2023.9/6ca77dd474eae7a2a1581e4b236ede5515ae25a7/elk-full.jar,file:/C:/Users/백동채/.gradle/caches/modules-2/files-2.1/net.sourceforge.plantuml/plantuml-mit/1.2023.9/6ca77dd474eae7a2a1581e4b236ede5515ae25a7/avalon-framework-4.2.0.jar,file:/C:/Users/백동채/.gradle/caches/modules-2/files-2.1/net.sourceforge.plantuml/plantuml-mit/1.2023.9/6ca77dd474eae7a2a1581e4b236ede5515ae25a7/batik-all-1.7.jar,file:/C:/Users/백동채/.gradle/caches/modules-2/files-2.1/net.sourceforge.plantuml/plantuml-mit/1.2023.9/6ca77dd474eae7a2a1581e4b236ede5515ae25a7/commons-io-1.3.1.jar,file:/C:/Users/백동채/.gradle/caches/modules-2/files-2.1/net.sourceforge.plantuml/plantuml-mit/1.2023.9/6ca77dd474eae7a2a1581e4b236ede5515ae25a7/commons-logDataging-1.0.4.jar,file:/C:/Users/백동채/.gradle/caches/modules-2/files-2.1/net.sourceforge.plantuml/plantuml-mit/1.2023.9/6ca77dd474eae7a2a1581e4b236ede5515ae25a7/fop.jar,file:/C:/Users/백동채/.gradle/caches/modules-2/files-2.1/net.sourceforge.plantuml/plantuml-mit/1.2023.9/6ca77dd474eae7a2a1581e4b236ede5515ae25a7/xml-apis-ext-1.3.04.jar,file:/C:/Users/백동채/.gradle/caches/modules-2/files-2.1/net.sourceforge.plantuml/plantuml-mit/1.2023.9/6ca77dd474eae7a2a1581e4b236ede5515ae25a7/xmlgraphics-commons-1.4.jar,file:/C:/Users/백동채/.gradle/caches/modules-2/files-2.1/net.sourceforge.plantuml/plantuml-mit/1.2023.9/6ca77dd474eae7a2a1581e4b236ede5515ae25a7/jlatexmath-minimal-1.0.3.jar,file:/C:/Users/백동채/.gradle/caches/modules-2/files-2.1/net.sourceforge.plantuml/plantuml-mit/1.2023.9/6ca77dd474eae7a2a1581e4b236ede5515ae25a7/jlm_cyrillic.jar,file:/C:/Users/백동채/.gradle/caches/modules-2/files-2.1/net.sourceforge.plantuml/plantuml-mit/1.2023.9/6ca77dd474eae7a2a1581e4b236ede5515ae25a7/jlm_greek.jar,file:/C:/Users/백동채/.gradle/caches/modules-2/files-2.1/net.sourceforge.plantuml/plantuml-mit/1.2023.9/6ca77dd474eae7a2a1581e4b236ede5515ae25a7/vizjs.jar,file:/C:/Users/백동채/.gradle/caches/modules-2/files-2.1/net.sourceforge.plantuml/plantuml-mit/1.2023.9/6ca77dd474eae7a2a1581e4b236ede5515ae25a7/j2v8_win32_x86_64-3.1.6.jar,file:/C:/Users/백동채/.gradle/caches/modules-2/files-2.1/net.sourceforge.plantuml/plantuml-mit/1.2023.9/6ca77dd474eae7a2a1581e4b236ede5515ae25a7/j2v8_linux_x86_64-3.1.6.jar,file:/C:/Users/백동채/.gradle/caches/modules-2/files-2.1/net.sourceforge.plantuml/plantuml-mit/1.2023.9/6ca77dd474eae7a2a1581e4b236ede5515ae25a7/j2v8_macosx_x86_64-3.1.6.jar,file:/C:/Users/백동채/.gradle/caches/modules-2/files-2.1/net.sourceforge.plantuml/plantuml-mit/1.2023.9/6ca77dd474eae7a2a1581e4b236ede5515ae25a7/ditaa0_9.jar
+2025-04-29 15:31:26.350 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-04-29 15:31:26.350 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logDataging consider setting the 'logDataging.level.web' property to 'DEBUG'
+2025-04-29 15:31:28.175 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2025-04-29 15:31:28.178 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-29 15:31:28.443 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 252 ms. Found 1 JPA repository interface.
+2025-04-29 15:31:28.463 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2025-04-29 15:31:28.465 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-04-29 15:31:28.494 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.hanait.gateway.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-04-29 15:31:28.494 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 15 ms. Found 0 Redis repository interfaces.
+2025-04-29 15:31:29.618 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-04-29 15:31:29.640 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-04-29 15:31:29.641 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-04-29 15:31:29.800 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-04-29 15:31:29.800 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 3448 ms
+2025-04-29 15:31:30.671 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-04-29 15:31:30.883 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.mariadb.jdbc.Connection@13a6fc3c
+2025-04-29 15:31:30.884 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-04-29 15:31:30.914 [restartedMain] WARN  o.m.jdbc.message.server.ErrorPacket - Error: 1193-HY000: Unknown system variable 'WSREP_ON'
+2025-04-29 15:31:30.965 [restartedMain] INFO  org.flywaydb.core.FlywayExecutor - Database: jdbc:mariadb://localhost/jwt?user=root&password=********&serverTimezone=Asia/Seoul (MariaDB 10.9)
+2025-04-29 15:31:31.032 [restartedMain] INFO  o.f.core.internal.command.DbValidate - Successfully validated 1 migration (execution time 00:00.035s)
+2025-04-29 15:31:31.046 [restartedMain] INFO  o.f.core.internal.command.DbMigrate - Current version of schema `jwt`: 1
+2025-04-29 15:31:31.051 [restartedMain] INFO  o.f.core.internal.command.DbMigrate - Schema `jwt` is up to date. No migration necessary.
+2025-04-29 15:31:31.185 [restartedMain] INFO  o.h.jpa.internal.util.logDataHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-04-29 15:31:31.305 [restartedMain] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.8.Final
+2025-04-29 15:31:31.322 [restartedMain] INFO  c.u.f.j.l.FilteringSqllogDatagerImplContributor - Adding service: SqlStatementFilteringlogDatager
+2025-04-29 15:31:31.379 [restartedMain] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-04-29 15:31:31.528 [restartedMain] INFO  o.h.e.b.internal.EnversServiceImpl - Envers integration enabled? : true
+2025-04-29 15:31:31.832 [restartedMain] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-04-29 15:31:31.951 [restartedMain] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
 	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
 	Database driver: undefined/unknown
 	Database version: 10.9.7
@@ -29,22 +38,110 @@
 	Isolation level: undefined/unknown
 	Minimum pool size: undefined/unknown
 	Maximum pool size: undefined/unknown
-2025-04-15 15:26:53.194 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2025-04-15 15:26:53.452 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2025-04-15 15:26:54.052 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2025-04-15 15:26:54.073 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+2025-04-29 15:31:32.475 [restartedMain] INFO  o.h.s.m.o.b.i.HibernateSearchPreIntegrationService - HSEARCH000034: Hibernate Search version 7.2.1.Final
+2025-04-29 15:31:33.952 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-04-29 15:31:34.375 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-29 15:31:34.405 [restartedMain] INFO  c.h.g.controller.PatientController - PatientController initialized with FHIR R4 context
+2025-04-29 15:31:34.423 [restartedMain] INFO  ca.uhn.fhir.util.VersionUtil - HAPI FHIR version 8.0.0 - Rev 091beb6d18
+2025-04-29 15:31:34.435 [restartedMain] INFO  ca.uhn.fhir.context.FhirContext - Creating new FHIR context for FHIR version [R4]
+2025-04-29 15:31:34.853 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
 
-Using generated security password: 0841dcca-b9bf-4886-b734-78bd47c00e2f
+Using generated security password: f89e5b4f-b763-4fbe-8a06-709ca9fb88d4
 
 This generated password is for development use only. Your security configuration must be updated before running your application in production.
 
-2025-04-15 15:26:54.082 [restartedMain] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
-2025-04-15 15:26:54.653 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
-2025-04-15 15:26:55.005 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
-2025-04-15 15:26:55.050 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
-2025-04-15 15:26:55.064 [restartedMain] INFO  c.hanait.gateway.GatewayApplication - Started GatewayApplication in 8.737 seconds (process running for 9.932)
-2025-04-15 15:27:06.296 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
-2025-04-15 15:27:07.643 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
-2025-04-15 15:27:07.859 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
-2025-04-15 15:27:07.869 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
-2025-04-15 15:27:07.884 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-04-29 15:31:34.862 [restartedMain] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-04-29 15:31:35.363 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-04-29 15:31:35.916 [es_rest_client_sniffer[T#1]] ERROR o.elasticsearch.client.sniff.Sniffer - error while sniffing nodes
+java.net.ConnectException: Connection refused: no further information
+	at org.elasticsearch.client.RestClient.extractAndWrapCause(RestClient.java:934)
+	at org.elasticsearch.client.RestClient.performRequest(RestClient.java:304)
+	at org.elasticsearch.client.RestClient.performRequest(RestClient.java:292)
+	at org.elasticsearch.client.sniff.ElasticsearchNodesSniffer.sniff(ElasticsearchNodesSniffer.java:106)
+	at org.elasticsearch.client.sniff.Sniffer.sniff(Sniffer.java:209)
+	at org.elasticsearch.client.sniff.Sniffer$Task.run(Sniffer.java:140)
+	at org.elasticsearch.client.sniff.Sniffer$1.run(Sniffer.java:81)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.net.ConnectException: Connection refused: no further information
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method)
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:672)
+	at java.base/sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:946)
+	at org.apache.http.impl.nio.reactor.DefaultConnectingIOReactor.processEvent(DefaultConnectingIOReactor.java:174)
+	at org.apache.http.impl.nio.reactor.DefaultConnectingIOReactor.processEvents(DefaultConnectingIOReactor.java:148)
+	at org.apache.http.impl.nio.reactor.AbstractMultiworkerIOReactor.execute(AbstractMultiworkerIOReactor.java:351)
+	at org.apache.http.impl.nio.conn.PoolingNHttpClientConnectionManager.execute(PoolingNHttpClientConnectionManager.java:221)
+	at org.apache.http.impl.nio.client.CloseableHttpAsyncClientBase$1.run(CloseableHttpAsyncClientBase.java:64)
+	... 1 common frames omitted
+2025-04-29 15:31:35.952 [restartedMain] INFO  org.quartz.impl.StdSchedulerFactory - Using default implementation for ThreadExecutor
+2025-04-29 15:31:35.965 [restartedMain] INFO  o.quartz.core.SchedulerSignalerImpl - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2025-04-29 15:31:35.966 [restartedMain] INFO  org.quartz.core.QuartzScheduler - Quartz Scheduler v.2.3.2 created.
+2025-04-29 15:31:35.971 [restartedMain] INFO  org.quartz.simpl.RAMJobStore - RAMJobStore initialized.
+2025-04-29 15:31:35.971 [restartedMain] INFO  org.quartz.core.QuartzScheduler - Scheduler meta-data: Quartz Scheduler (v2.3.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2025-04-29 15:31:35.971 [restartedMain] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2025-04-29 15:31:35.971 [restartedMain] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler version: 2.3.2
+2025-04-29 15:31:35.972 [restartedMain] INFO  org.quartz.core.QuartzScheduler - JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@63db77b6
+2025-04-29 15:31:36.041 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-04-29 15:31:36.086 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-04-29 15:31:36.089 [restartedMain] INFO  o.s.s.quartz.SchedulerFactoryBean - Starting Quartz Scheduler now
+2025-04-29 15:31:36.089 [restartedMain] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2025-04-29 15:31:36.098 [restartedMain] INFO  c.hanait.gateway.GatewayApplication - Started GatewayApplication in 10.518 seconds (process running for 12.255)
+2025-04-29 15:36:35.930 [es_rest_client_sniffer[T#1]] ERROR o.elasticsearch.client.sniff.Sniffer - error while sniffing nodes
+java.net.ConnectException: Connection refused: no further information
+	at org.elasticsearch.client.RestClient.extractAndWrapCause(RestClient.java:934)
+	at org.elasticsearch.client.RestClient.performRequest(RestClient.java:304)
+	at org.elasticsearch.client.RestClient.performRequest(RestClient.java:292)
+	at org.elasticsearch.client.sniff.ElasticsearchNodesSniffer.sniff(ElasticsearchNodesSniffer.java:106)
+	at org.elasticsearch.client.sniff.Sniffer.sniff(Sniffer.java:209)
+	at org.elasticsearch.client.sniff.Sniffer$Task.run(Sniffer.java:140)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.net.ConnectException: Connection refused: no further information
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method)
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:672)
+	at java.base/sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:946)
+	at org.apache.http.impl.nio.reactor.DefaultConnectingIOReactor.processEvent(DefaultConnectingIOReactor.java:174)
+	at org.apache.http.impl.nio.reactor.DefaultConnectingIOReactor.processEvents(DefaultConnectingIOReactor.java:148)
+	at org.apache.http.impl.nio.reactor.AbstractMultiworkerIOReactor.execute(AbstractMultiworkerIOReactor.java:351)
+	at org.apache.http.impl.nio.conn.PoolingNHttpClientConnectionManager.execute(PoolingNHttpClientConnectionManager.java:221)
+	at org.apache.http.impl.nio.client.CloseableHttpAsyncClientBase$1.run(CloseableHttpAsyncClientBase.java:64)
+	... 1 common frames omitted
+2025-04-29 15:41:35.946 [es_rest_client_sniffer[T#1]] ERROR o.elasticsearch.client.sniff.Sniffer - error while sniffing nodes
+java.net.ConnectException: Connection refused: no further information
+	at org.elasticsearch.client.RestClient.extractAndWrapCause(RestClient.java:934)
+	at org.elasticsearch.client.RestClient.performRequest(RestClient.java:304)
+	at org.elasticsearch.client.RestClient.performRequest(RestClient.java:292)
+	at org.elasticsearch.client.sniff.ElasticsearchNodesSniffer.sniff(ElasticsearchNodesSniffer.java:106)
+	at org.elasticsearch.client.sniff.Sniffer.sniff(Sniffer.java:209)
+	at org.elasticsearch.client.sniff.Sniffer$Task.run(Sniffer.java:140)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.net.ConnectException: Connection refused: no further information
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method)
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:672)
+	at java.base/sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:946)
+	at org.apache.http.impl.nio.reactor.DefaultConnectingIOReactor.processEvent(DefaultConnectingIOReactor.java:174)
+	at org.apache.http.impl.nio.reactor.DefaultConnectingIOReactor.processEvents(DefaultConnectingIOReactor.java:148)
+	at org.apache.http.impl.nio.reactor.AbstractMultiworkerIOReactor.execute(AbstractMultiworkerIOReactor.java:351)
+	at org.apache.http.impl.nio.conn.PoolingNHttpClientConnectionManager.execute(PoolingNHttpClientConnectionManager.java:221)
+	at org.apache.http.impl.nio.client.CloseableHttpAsyncClientBase$1.run(CloseableHttpAsyncClientBase.java:64)
+	... 1 common frames omitted

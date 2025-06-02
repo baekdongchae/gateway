@@ -23,7 +23,7 @@ class TokenProviderTest {
 //        User user = getMember();
 //
 //        TokenInfo token = tokenProvider.createToken(user);
-//        log.info("access token={}", token.getAccessToken());
+//        logData.info("access token={}", token.getAccessToken());
 //    }
 //
 //    @Test

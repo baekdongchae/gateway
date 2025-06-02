@@ -15,6 +15,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.security.Key;
 import java.util.Arrays;
@@ -104,7 +105,7 @@ public class TokenProvider {
         return Jwts.builder()
                 .setSubject(userId)
                 .claim(TOKEN_TYPE, tokenType)
-                .claim(AUTHORITIES_KEY, role)
+                .claim(AUTHORITIES_KEY, role.name())
                 .claim(TOKEN_ID_KEY, tokenId)
                 .signWith(hashKey, SignatureAlgorithm.HS512)
                 .setExpiration(tokenExpireTime)
@@ -135,7 +136,7 @@ public class TokenProvider {
     public TokenValidationResult validateToken(String token) {
 
         if (token == null || token.trim().isEmpty()) {
-            log.error("토큰이 null이거나 비어있습니다.");
+            log.debug("토큰이존재하지않음");
             return new TokenValidationResult(TokenStatus.TOKEN_WRONG_SIGNATURE, null, null, null);
         }
 
@@ -183,5 +184,13 @@ public class TokenProvider {
         return new UsernamePasswordAuthenticationToken(principle, token, authorities);
     }
 
+    public String extractAccessTokenFromContext() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !(authentication.getCredentials() instanceof String token)) {
+            log.warn("SecurityContext에 인증 정보가 없거나 잘못된 타입입니다.");
+            return null;
+        }
+        return token;
+    }
 }
 

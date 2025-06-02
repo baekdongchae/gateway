@@ -5,15 +5,19 @@ import com.hanait.gateway.config.jwt.token.dto.TokenValidationResult;
 import com.hanait.gateway.config.jwt.token.TokenProvider;
 import com.hanait.gateway.config.jwt.token.TokenStatus;
 import com.hanait.gateway.config.jwt.token.TokenType;
+import com.hanait.gateway.logging.api.ApiLogContext;
+import com.hanait.gateway.logging.api.ApilogData;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -34,8 +38,19 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
+        log.info("들어온 요청 URI: {}", request.getRequestURI());
+        log.info("Authorization 헤어: {}", request.getHeader("Authorization"));
+
         String token = resolveToken(request);
+        log.info("🔍 추출된 토큰: {}", token);
+
+        if(token == null){
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         TokenValidationResult tokenValidationResult = tokenProvider.validateToken(token);
+        log.info("🔍 토큰 검증 결과: {}", tokenValidationResult != null ? tokenValidationResult.getTokenStatus() : "null");
 
         if (tokenValidationResult == null || tokenValidationResult.getTokenType() == null) {
             handleInvalidToken(request, response, filterChain);
@@ -61,47 +76,21 @@ public class JwtFilter extends OncePerRequestFilter {
         }
     }
 
-//        if (tokenValidationResult.getTokenType().equals(TokenType.ACCESS)) { //access token인 경우
-//            // blacklist에 있는지 확인
-//            if (tokenProvider.isAccessTokenBlackList(token)) {
-//                handleBlackListToken(request, response, filterChain);
-//                return;
-//            }
-//            //정상 토큰 처리
-//            handleValidToken(token, tokenValidationResult);
-//            filterChain.doFilter(request, response);
-//
-//        } else if (tokenValidationResult.getTokenType().equals(TokenType.REFRESH)){ //refresh token인 경우
-//            //refreshTokenList에 있는지 확인
-//            if (tokenProvider.isRefreshTokenList(token)) {
-//                //access token 재발급
-//                handleRefreshToken(request, response, tokenValidationResult, filterChain);
-//            }
-//            else {
-//                //존재하지 않는 refresh token 처리
-//                handleInvalidToken(request, response, filterChain);
-//            }
-//
-//        } else { //type이 access, refresh 둘 다 아닌 경우
-//            handleWrongTypeToken(request, response, filterChain);
-//        }
-//    }
-
-    private void handleBlackListToken(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    private void handleBlackListToken(HttpServletRequest request, HttpServletResponse response,
+                                      FilterChain filterChain) throws ServletException, IOException {
         request.setAttribute("result", new TokenValidationResult(TokenStatus.TOKEN_IS_BLACKLIST, null, null, null));
         filterChain.doFilter(request, response);
     }
 
 
-    private void handleRefreshToken(HttpServletRequest request, HttpServletResponse response, TokenValidationResult tokenValidationResult, FilterChain filterChain) throws IOException, ServletException {
+    private void handleRefreshToken(HttpServletRequest request, HttpServletResponse response,
+                                    TokenValidationResult tokenValidationResult, FilterChain filterChain) throws IOException, ServletException {
 
         TokenInfo newAccessTokenInfo = tokenProvider.recreateAccessToken(tokenValidationResult.getClaims());
-
         log.info("Issued new access token: {}", newAccessTokenInfo.getAccessToken());
 
         request.setAttribute("result", new TokenValidationResult(TokenStatus.TOKEN_REFRESHED, null, null, null, newAccessTokenInfo));
-
-        filterChain.doFilter(request, response);
+        throw new BadCredentialsException("Access token refreshed"); // EntryPoint 진입 유도
     }
 
     private static void handleInvalidToken(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {
@@ -118,7 +107,13 @@ public class JwtFilter extends OncePerRequestFilter {
         //사용자 인증을 처리하기 위해 securityContext에 authentication을 넣어줘야 한다.
         Authentication authentication = tokenProvider.getAuthentication(token, tokenValidationResult.getClaims());
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        log.info("AUTH SUCCESS : {}", authentication.getName());
+        // ✅ ApilogDataContext에 사용자 정보 저장
+        ApilogData logData = ApiLogContext.get();
+        if (logData != null) {
+            logData.setRequestUserCode(authentication.getName()); // 보통 userId
+            logData.setTokenHash(DigestUtils.md5DigestAsHex(token.getBytes())); // 토큰 Hash 저장
+        }
+        log.info("✅ 인증 성공 - 사용자 ID: {}, 권한: {}", authentication.getName(), authentication.getAuthorities());
     }
 
     private String resolveToken(HttpServletRequest request) {
@@ -130,16 +125,5 @@ public class JwtFilter extends OncePerRequestFilter {
 
         return null;
     }
-    //    private static void handleWrongToken(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain,
-//                                         TokenValidationResult tokenValidationResult) throws IOException, ServletException {
-//        request.setAttribute("result", tokenValidationResult);
-//        filterChain.doFilter(request, response);
-//    }
-//
-//    private static void handleMissingToken(HttpServletRequest request, HttpServletResponse response,
-//                                           FilterChain filterChain) throws IOException, ServletException {
-//        request.setAttribute("result", new TokenValidationResult(TokenStatus.WRONG_AUTH_HEADER, null, null, null));
-//        filterChain.doFilter(request, response);
-//    }
 
 }

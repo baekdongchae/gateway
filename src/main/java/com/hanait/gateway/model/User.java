@@ -23,6 +23,8 @@ public class User extends BaseTimeEntity{
     @Column(length = 100)
     private String userPw;
 
+    private int isActive;
+
     @Enumerated(EnumType.STRING)
     private Role role;
 

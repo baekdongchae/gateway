@@ -105,12 +105,12 @@ class BaseTimeEntityTest {
 //                "Second and third update times should be different");
 //
 //        assertTrue(secondUpdateTime.isAfter(firstUpdateTime),
-//                "Each update time should be chronologically later");
+//                "Each update time should be chronologDataically later");
 //        assertTrue(thirdUpdateTime.isAfter(secondUpdateTime),
-//                "Each update time should be chronologically later");
+//                "Each update time should be chronologDataically later");
 //
-//        log.info("Initial update time: {}", firstUpdateTime);
-//        log.info("After first update: {}", secondUpdateTime);
-//        log.info("After second update: {}", thirdUpdateTime);
+//        logData.info("Initial update time: {}", firstUpdateTime);
+//        logData.info("After first update: {}", secondUpdateTime);
+//        logData.info("After second update: {}", thirdUpdateTime);
 //    }
 }

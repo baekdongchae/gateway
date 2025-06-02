@@ -6,6 +6,7 @@ import com.hanait.gateway.config.jwt.token.dto.TokenInfo;
 import com.hanait.gateway.config.jwt.dto.member.CreateUserRequest;
 import com.hanait.gateway.config.jwt.dto.member.UserInfoDto;
 import com.hanait.gateway.config.jwt.token.TokenProvider;
+import com.hanait.gateway.logging.db.LogDbChange;
 import com.hanait.gateway.model.User;
 import com.hanait.gateway.model.Role;
 import com.hanait.gateway.repository.UserRepository;
@@ -97,4 +98,13 @@ public class UserService {
         return findMemberByUserId(userId).toUserInfoDte();
     }
 
+    @Transactional
+    @LogDbChange(table = "user", operation = "UPDATE")
+    public void updateUser(Long userCode, String newPassword) {
+        User user = userRepository.findById(userCode)
+                .orElseThrow(() -> new RuntimeException("사용자 없음"));
+
+        user.setUserPw(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+    }
 }

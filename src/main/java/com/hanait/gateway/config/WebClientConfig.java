@@ -1,24 +1,27 @@
 package com.hanait.gateway.config;
 
-import org.springframework.beans.factory.annotation.Value;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 
+@Slf4j
 @Configuration
 public class WebClientConfig {
 
-    @Value("${hapi.fhir.base-url}")
-    private String hapiFhirBaseUrl;
+    private final WebClientLoggingFilter webClientLoggingFilter;
+
+    public WebClientConfig(WebClientLoggingFilter webClientLoggingFilter) {
+        this.webClientLoggingFilter = webClientLoggingFilter;
+    }
 
     @Bean
     public WebClient webClient() {
         return WebClient.builder()
-                .baseUrl(hapiFhirBaseUrl)
-                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .baseUrl("http://hapi-fhir-jpaserver-start:8090/fhir")
+                .defaultHeader(HttpHeaders.CONTENT_TYPE, "application/fhir+json")
+                .filter(webClientLoggingFilter.logRequestAndResponse())
                 .build();
     }
 }

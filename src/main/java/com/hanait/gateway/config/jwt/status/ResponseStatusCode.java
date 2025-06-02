@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 public final class ResponseStatusCode {
     public static final int URL_NOT_FOUND = 404;
     public static final int EMAIL_NOT_VERIFIED = 410;
-    public static final int LOGIN_FAILED = 430;
+    public static final int logDataIN_FAILED = 430;
 
     public static final int OK = 200;
 

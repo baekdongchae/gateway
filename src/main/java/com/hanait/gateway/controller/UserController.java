@@ -1,9 +1,10 @@
 package com.hanait.gateway.controller;
 
+import com.hanait.gateway.config.jwt.dto.member.UpdateUserPasswordRequest;
+import com.hanait.gateway.config.jwt.dto.member.loginUserRequest;
 import com.hanait.gateway.principle.UserPrinciple;
 import com.hanait.gateway.config.jwt.token.dto.TokenInfo;
 import com.hanait.gateway.config.jwt.dto.member.CreateUserRequest;
-import com.hanait.gateway.config.jwt.dto.member.LoginUserRequest;
 import com.hanait.gateway.config.jwt.dto.member.UserInfoDto;
 import com.hanait.gateway.config.jwt.token.ApiResponseJson;
 import com.hanait.gateway.model.User;
@@ -58,11 +59,11 @@ public class UserController {
     }
 
     @PostMapping("/user/login")
-    public ApiResponseJson login(@Valid @RequestBody LoginUserRequest request, BindingResult bindingResult) {
+    public ApiResponseJson login(@Valid @RequestBody loginUserRequest request, BindingResult bindingResult) {
         String requestUUID = generateRequestUUID();
         String clientIp = IpAddressUtil.getClientIpAddress();
 
-        log.info("API Call [{}] - Login request received for user: {}", requestUUID, request.getUserId());
+        log.info("API Call [{}] - login request received for user: {}", requestUUID, request.getUserId());
         
         if (bindingResult.hasErrors()) {
             log.error("API Call [{}] - Invalid login request", requestUUID);
@@ -79,6 +80,12 @@ public class UserController {
         tokenInfo.setIpAdd(clientIp);
         
         return new ApiResponseJson(HttpStatus.OK, tokenInfo);
+    }
+
+    @PostMapping("/user/update-password")
+    public ApiResponseJson updatePassword(@RequestBody UpdateUserPasswordRequest request) {
+        userService.updateUser(request.getUserCode(), request.getUserPw());
+        return new ApiResponseJson(HttpStatus.OK, Map.of("message", "비밀번호 업데이트 성공"));
     }
 
     @GetMapping("/userinfo")
@@ -104,7 +111,7 @@ public class UserController {
         String requestUUID = generateRequestUUID();
         String userCode = userPrinciple.getUserCode();
 
-        log.info("API Call [{}] - Logout request for user code: {}", requestUUID, userCode);
+        log.info("API Call [{}] - logout request for user code: {}", requestUUID, userCode);
 
         // Bearer 를 문자열에서 제외하기 위해 substring을 사용
         userService.logout(authHeader.substring(7), userCode);
