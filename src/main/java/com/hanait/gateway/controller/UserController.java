@@ -70,14 +70,15 @@ public class UserController {
             throw new IllegalArgumentException("잘못된 요청입니다.");
         }
 
-        TokenInfo tokenInfo = userService.loginMember(request.getUserId(), request.getUserPw());
-
-        log.info("API Call [{}] - Token issued for user: {}", requestUUID, request.getUserId());
-        log.info("clientIP [{}] - Token issued for user: {}", clientIp, request.getUserId());
-
+        TokenInfo tokenInfo = new TokenInfo();
         // Add the requestId to the response
         tokenInfo.setRequestId(requestUUID);
         tokenInfo.setIpAdd(clientIp);
+
+        tokenInfo = userService.loginMember(tokenInfo, request.getUserId(), request.getUserPw());
+
+        log.info("API Call [{}] - Token issued for userCode: {}", requestUUID, request.getUserId());
+        log.info("clientIP [{}] - Token issued for userCode: {}", clientIp, request.getUserId());
         
         return new ApiResponseJson(HttpStatus.OK, tokenInfo);
     }

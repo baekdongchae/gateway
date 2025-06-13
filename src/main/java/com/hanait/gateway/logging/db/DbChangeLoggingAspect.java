@@ -1,5 +1,6 @@
 package com.hanait.gateway.logging.db;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hanait.gateway.logging.api.ApiLogContext;
 import com.hanait.gateway.repository.MongoDbChangeLogRepository;
@@ -9,12 +10,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.bson.Document;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
-import java.util.*;
+import java.util.Arrays;
+import java.util.UUID;
 
 @Aspect
 @Component
@@ -45,8 +45,10 @@ public class DbChangeLoggingAspect {
                 .requestUserCode(ApiLogContext.get() != null ? ApiLogContext.get().getRequestUserCode() : null)
                 .dbTable(tableName)
                 .operation(operation)
-                .previousData(objectMapper.convertValue(previous, Map.class))
-                .changedData(objectMapper.convertValue(changed, Map.class))
+                .previousData(objectMapper.convertValue(previous, new TypeReference<>() {
+                }))
+                .changedData(objectMapper.convertValue(changed, new TypeReference<>() {
+                }))
                 .build();
 
         mongoDbChangeLogRepository.save(logEntry);

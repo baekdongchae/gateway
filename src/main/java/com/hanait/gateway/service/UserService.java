@@ -7,9 +7,11 @@ import com.hanait.gateway.config.jwt.dto.member.CreateUserRequest;
 import com.hanait.gateway.config.jwt.dto.member.UserInfoDto;
 import com.hanait.gateway.config.jwt.token.TokenProvider;
 import com.hanait.gateway.logging.db.LogDbChange;
+import com.hanait.gateway.logging.db.LoginLogger;
 import com.hanait.gateway.model.User;
 import com.hanait.gateway.model.Role;
 import com.hanait.gateway.repository.UserRepository;
+import com.hanait.gateway.util.IpAddressUtil;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +33,8 @@ public class UserService {
     private final TokenProvider tokenProvider;
     private final AccessTokenBlackList accessTokenBlackList;
     private final RefreshTokenList refreshTokenList;
+    private final RedisLoginService redisLoginService;
+    private final LoginLogger loginLogger;
 
     //회원가입
     public User createMember(CreateUserRequest request) {
@@ -63,17 +67,41 @@ public class UserService {
     }
 
     //로그인
-    public TokenInfo loginMember(String userId, String userPw) {
+    public TokenInfo loginMember(TokenInfo tokenInfo, String userId, String userPw) {
+        String clientIp = IpAddressUtil.getClientIpAddress();
+
+        User user = findMemberByUserId(userId);
+        Long userCode = user.getUserCode();
+
         try {
-            User user = findMemberByUserId(userId);
+            if (redisLoginService.isUserBlocked(userCode)) {
+                loginLogger.logBlocked(tokenInfo.getRequestId(), userCode, 5, clientIp); // MongoDB에 차단 로그 기록
+                throw new IllegalStateException("해당 계정은 일시적으로 차단되었습니다.");
+            }
 
             checkPassword(userPw, user);
 
-            return tokenProvider.createToken(user);
+            redisLoginService.clearSignInAttempts(userId);
+            tokenProvider.createToken(user);
+            tokenInfo.setIpAdd(clientIp);
+
+            return tokenInfo;
+
         } catch (BadCredentialsException e) {
+            int count = redisLoginService.increaseSignInAttempts(userCode);
+
+            if (count >= 5) {
+                // 차단된 유저는 차단 로그 기록
+                loginLogger.logBlocked(tokenInfo.getRequestId(), userCode, count, clientIp);
+            } else {
+                // 일반 실패 로그
+                loginLogger.logFailure(tokenInfo.getRequestId(), userCode, count, clientIp);
+            }
+
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
     }
+
 
     //로그아웃
     public void logout(String accessToken, String userCode) {
@@ -97,6 +125,13 @@ public class UserService {
     public UserInfoDto getUserInfo(String userId) {
         return findMemberByUserId(userId).toUserInfoDte();
     }
+
+//    private User findMemberByUserCode(Long userCode) {
+//        return userRepository.findByUserCode(userCode).orElseThrow(() -> {
+//            log.info("계정이 존재하지 않음.");
+//            return new IllegalArgumentException("계정이 존재하지 않습니다.");
+//        });
+//    }
 
     @Transactional
     @LogDbChange(table = "user", operation = "UPDATE")

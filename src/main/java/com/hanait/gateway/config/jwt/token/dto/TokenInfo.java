@@ -1,8 +1,7 @@
 package com.hanait.gateway.config.jwt.token.dto;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.ToString;
+import jakarta.validation.constraints.NotEmpty;
+import lombok.*;
 
 import java.util.Date;
 
@@ -11,7 +10,9 @@ import java.util.Date;
  */
 @Data
 @ToString() //accessToken이 너무 길기때문에 출력시 로그가 너무 길어져 accessToken은 제외
+@NoArgsConstructor
 public class TokenInfo {
+
     private String accessToken;
     private Date accessTokenExpireTime;
     private String accessTokenId;
@@ -19,6 +20,8 @@ public class TokenInfo {
     private Date refreshTokenExpireTime;
     private String refreshTokenId;
     private String ownerId; //소유자의 이메일
+    // requestId는 Builder 패턴으로 생성하지 않고 별도로 설정
+    @Setter
     private String requestId; // API 요청 추적을 위한 고유 UUID
     private String IpAdd;
 
@@ -34,9 +37,5 @@ public class TokenInfo {
         this.ownerId = ownerId;
         this.IpAdd = IpAdd;
     }
-    
-    // requestId는 Builder 패턴으로 생성하지 않고 별도로 설정
-    public void setRequestId(String requestId) {
-        this.requestId = requestId;
-    }
+
 }

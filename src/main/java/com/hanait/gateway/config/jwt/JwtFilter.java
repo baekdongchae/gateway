@@ -39,7 +39,7 @@ public class JwtFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         log.info("들어온 요청 URI: {}", request.getRequestURI());
-        log.info("Authorization 헤어: {}", request.getHeader("Authorization"));
+        log.info("Authorization : {}", request.getHeader("Authorization"));
 
         String token = resolveToken(request);
         log.info("🔍 추출된 토큰: {}", token);
