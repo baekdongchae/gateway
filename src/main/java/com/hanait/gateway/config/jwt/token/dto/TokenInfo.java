@@ -13,6 +13,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class TokenInfo {
 
+    private Long userCode;
     private String accessToken;
     private Date accessTokenExpireTime;
     private String accessTokenId;
@@ -26,8 +27,9 @@ public class TokenInfo {
     private String IpAdd;
 
     @Builder
-    public TokenInfo(String accessToken, Date accessTokenExpireTime, String accessTokenId, String refreshToken,
+    public TokenInfo(Long userCode, String accessToken, Date accessTokenExpireTime, String accessTokenId, String refreshToken,
                      Date refreshTokenExpireTime, String refreshTokenId, String ownerId, String IpAdd) {
+        this.userCode = userCode;
         this.accessToken = accessToken;
         this.accessTokenExpireTime = accessTokenExpireTime;
         this.accessTokenId = accessTokenId;
