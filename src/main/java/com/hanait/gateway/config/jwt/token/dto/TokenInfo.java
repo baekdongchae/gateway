@@ -21,10 +21,11 @@ public class TokenInfo {
     private Date refreshTokenExpireTime;
     private String refreshTokenId;
     private String ownerId; //소유자의 이메일
+    private String IpAdd;
     // requestId는 Builder 패턴으로 생성하지 않고 별도로 설정
     @Setter
     private String requestId; // API 요청 추적을 위한 고유 UUID
-    private String IpAdd;
+
 
     @Builder
     public TokenInfo(Long userCode, String accessToken, Date accessTokenExpireTime, String accessTokenId, String refreshToken,

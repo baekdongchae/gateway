@@ -78,7 +78,7 @@ public class TokenProvider {
     }
 
     //토큰생성
-    public TokenInfo createToken(User user) {
+    public TokenInfo createToken(User user, String ipAdd) {
 
         long currentTime = (new Date()).getTime();
 
@@ -103,8 +103,10 @@ public class TokenProvider {
                 .refreshToken(refreshToken)
                 .refreshTokenExpireTime(refreshTokenExpireTime)
                 .refreshTokenId(refreshTokenId)
+                .IpAdd(ipAdd)
                 .build();
 
+        tokenInfo.setRequestId(UUID.randomUUID().toString());
 // 로그 기록
         tokenLogService.saveTokenLog(user.getUserCode(), accessToken, refreshTokenId, "ACCESS_TOKEN_ISSUED", "Login issued");
 

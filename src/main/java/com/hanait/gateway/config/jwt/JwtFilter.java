@@ -82,7 +82,6 @@ public class JwtFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
-
     private void handleRefreshToken(HttpServletRequest request, HttpServletResponse response,
                                     TokenValidationResult tokenValidationResult, FilterChain filterChain) throws IOException, ServletException {
 

@@ -32,7 +32,6 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
     private final AccessTokenBlackList accessTokenBlackList;
-    private final RefreshTokenList refreshTokenList;
     private final RedisLoginService redisLoginService;
     private final LoginLogger loginLogger;
 
@@ -82,10 +81,9 @@ public class UserService {
             checkPassword(userPw, user);
 
             redisLoginService.clearSignInAttempts(userId);
-            tokenProvider.createToken(user);
             tokenInfo.setIpAdd(clientIp);
 
-            return tokenInfo;
+            return tokenProvider.createToken(user, clientIp);
 
         } catch (BadCredentialsException e) {
             int count = redisLoginService.increaseSignInAttempts(userCode);
