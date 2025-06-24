@@ -15,5 +15,7 @@ public class UpdateUserPasswordRequest {
     @NotEmpty
     private Long userCode;
     @NotBlank(message = "비밀번호는 필수 입력값입니다.")
-    private String userPw;
+    private String currentPassword;
+    @NotBlank(message = "비밀번호는 필수 입력값입니다.")
+    private String newPassword;
 }

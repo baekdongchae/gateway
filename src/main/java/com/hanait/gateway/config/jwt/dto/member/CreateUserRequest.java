@@ -21,5 +21,7 @@ public class CreateUserRequest {
      */
     @NotNull
     private String userPw;
+    @NotEmpty
+    private String phoneNumber;
 
 }

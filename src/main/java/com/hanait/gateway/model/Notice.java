@@ -3,6 +3,8 @@ package com.hanait.gateway.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "notices")
 @Getter
@@ -14,7 +16,7 @@ public class Notice extends BaseTimeEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "notice_id")
-    private Integer noticeId;
+    private Long noticeId;
 
     @Column(name = "notice_title", columnDefinition = "text")
     private String noticeTitle;
@@ -27,7 +29,7 @@ public class Notice extends BaseTimeEntity{
     private NoticeType noticeType;
 
     @Column(name = "notice_end_date")
-    private String noticeEndDate;
+    private LocalDateTime noticeEndDate;
 
     @ManyToOne
     @JoinColumn(name = "notice_visibility", nullable = false)
@@ -40,8 +42,8 @@ public class Notice extends BaseTimeEntity{
 //    private String createTime;
 
     @Builder
-    public Notice(String noticeTitle, String noticeContent, NoticeType noticeType, 
-                 String noticeEndDate, DefaultType noticeVisibility) {
+    public Notice(String noticeTitle, String noticeContent, NoticeType noticeType,
+                  LocalDateTime noticeEndDate, DefaultType noticeVisibility) {
         this.noticeTitle = noticeTitle;
         this.noticeContent = noticeContent;
         this.noticeType = noticeType;

@@ -25,9 +25,12 @@ bin/
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
-#application.properties
-#Dockerfile
-#docker-compose.yml
+application.properties
+application-local.properties
+application-prod.properties
+
+Dockerfile
+docker-compose.yml
 
 ### NetBeans ###
 /nbproject/private/

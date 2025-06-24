@@ -23,21 +23,25 @@ public class User extends BaseTimeEntity{
     @Column(length = 100)
     private String userPw;
 
+    private String phoneNumber;
+
     private int isActive;
 
     @Enumerated(EnumType.STRING)
     private Role role;
 
     @Builder
-    public User(String userId, String userPw, Role role) {
+    public User(String userId, String userPw, String phoneNumber, Role role) {
         this.userId = userId;
         this.userPw = userPw;
+        this.phoneNumber = phoneNumber;
         this.role = role;
     }
 
     public UserInfoDto toUserInfoDte() {
         return UserInfoDto.builder()
                 .userId(this.getUserId())
+                .phoneNumber(this.getPhoneNumber())
                 .role(this.getRole())
                 .build();
     }

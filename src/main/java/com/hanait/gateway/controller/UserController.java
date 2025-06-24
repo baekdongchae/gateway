@@ -14,6 +14,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +25,7 @@ import java.util.UUID;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/user")
 public class UserController {
 
     private final UserService userService;
@@ -40,7 +42,7 @@ public class UserController {
         return UUID.randomUUID().toString();
     }
 
-    @PostMapping("/user/register")
+    @PostMapping("/register")
     public ApiResponseJson register(@Valid @RequestBody CreateUserRequest request, BindingResult bindingResult) {
         String requestUUID = generateRequestUUID();
         log.info("API Call [{}] - Register request received", requestUUID);
@@ -58,7 +60,7 @@ public class UserController {
         );
     }
 
-    @PostMapping("/user/login")
+    @PostMapping("/login")
     public ApiResponseJson login(@Valid @RequestBody loginUserRequest request, BindingResult bindingResult) {
         String requestUUID = generateRequestUUID();
         String clientIp = IpAddressUtil.getClientIpAddress();
@@ -83,10 +85,13 @@ public class UserController {
         return new ApiResponseJson(HttpStatus.OK, tokenInfo);
     }
 
-    @PostMapping("/user/update-password")
+    @PostMapping("/update-password")
     public ApiResponseJson updatePassword(@RequestBody UpdateUserPasswordRequest request) {
-        userService.updateUser(request.getUserCode(), request.getUserPw());
-        return new ApiResponseJson(HttpStatus.OK, Map.of("message", "비밀번호 업데이트 성공"));
+        boolean success = userService.updateUserPassword(request);
+        if (!success) {
+            return new ApiResponseJson(HttpStatus.BAD_REQUEST, Map.of("message", "비밀번호 변경 실패: 현재 비밀번호가 일치하지 않거나 유효하지 않습니다."));
+        }
+        return new ApiResponseJson(HttpStatus.OK, Map.of("message", "비밀번호 변경 성공"));
     }
 
     @GetMapping("/userinfo")
@@ -106,7 +111,7 @@ public class UserController {
         return new ApiResponseJson(HttpStatus.OK, response);
     }
 
-    @PostMapping("/user/logout")
+    @PostMapping("/logout")
     public ApiResponseJson logout(@AuthenticationPrincipal UserPrinciple userPrinciple,
                                   @RequestHeader("Authorization") String authHeader) {
         String requestUUID = generateRequestUUID();
@@ -121,5 +126,12 @@ public class UserController {
             "message", "로그아웃 성공",
             "requestId", requestUUID
         ));
+    }
+
+    @GetMapping("/find-id")
+    public ResponseEntity<String> findUserId(@RequestParam String phoneNumber) {
+
+        String userId = userService.findUserIdByPhoneNumber(phoneNumber);
+        return ResponseEntity.ok(userId);
     }
 }
